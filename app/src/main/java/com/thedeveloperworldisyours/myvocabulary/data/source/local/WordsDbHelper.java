@@ -43,3 +43,4 @@ public class WordsDbHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Not required as at version 1
     }
+}

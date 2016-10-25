@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,53 +109,141 @@ public class WordsRepository implements WordsDataSource {
     }
 
     @Override
-    public void getWord(@NonNull String wordId, @NonNull GetWordCallback callback) {
+    public void getWord(@NonNull final String wordId, @NonNull final GetWordCallback callback) {
+        checkNotNull(wordId);
+        checkNotNull(callback);
+
+        Word cacheWord = getWordWithId(wordId);
+
+        if (cacheWord != null) {
+            callback.onWordLoaded(cacheWord);
+            return;
+        }
+
+        // Is the word in the local data source? If not, query the network.
+        mWordsLocalDataSource.getWord(wordId, new GetWordCallback() {
+            @Override
+            public void onWordLoaded(Word word) {
+                callback.onWordLoaded(word);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mWordsRemoteDataSource.getWord(wordId, new GetWordCallback() {
+                    @Override
+                    public void onWordLoaded(Word word) {
+                        callback.onWordLoaded(word);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        callback.onDataNotAvailable();
+                    }
+                });
+            }
+        });
 
     }
 
     @Override
     public void saveWord(@NonNull Word word) {
+        checkNotNull(word);
+        mWordsRemoteDataSource.saveWord(word);
+        mWordsLocalDataSource.saveWord(word);
 
+        //Do in memory cache update to keep the app UI up to date
+        if (mCachedWords == null) {
+            mCachedWords = new LinkedHashMap<>();
+        }
+
+        mCachedWords.put(word.getId(), word);
     }
 
     @Override
     public void learnedWord(@NonNull Word word) {
+        checkNotNull(word);
+        mWordsRemoteDataSource.learnedWord(word);
+        mWordsLocalDataSource.learnedWord(word);
+
+        Word learnedWord = new Word(word.getTitle(),word.getDescription(), word.getId(), true);
+
+        // Do in memory cache update to keep the app UI up to date
+        if (mCachedWords == null) {
+            mCachedWords = new LinkedHashMap<>();
+        }
+        mCachedWords.put(word.getId(), learnedWord);
 
     }
 
     @Override
     public void learnedWord(@NonNull String wordId) {
+        checkNotNull(wordId);
 
+        learnedWord(getWordWithId(wordId));
     }
 
     @Override
     public void activateWord(@NonNull Word word) {
+        checkNotNull(word);
+        mWordsRemoteDataSource.activateWord(word);
+        mWordsLocalDataSource.activateWord(word);
 
+        Word activateWord = new Word(word.getTitle(), word.getDescription(), word.getId());
+
+        if (mCachedWords == null) {
+            mCachedWords = new LinkedHashMap<>();
+        }
+        mCachedWords.put(word.getId(), activateWord);
     }
 
     @Override
     public void activateWord(@NonNull String wordId) {
-
+        checkNotNull(wordId);
+        activateWord(getWordWithId(wordId));
     }
 
     @Override
     public void clearLearnedWords() {
 
+        mWordsRemoteDataSource.clearLearnedWords();
+        mWordsLocalDataSource.clearLearnedWords();
+        // Do in memory cache update to keep the app UI up to date
+        if (mCachedWords == null) {
+            mCachedWords = new LinkedHashMap<>();
+        }
+
+        Iterator<Map.Entry<String, Word>> iterator = mCachedWords.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, Word> entry = iterator.next();
+            if (entry.getValue().isLearned()){
+                iterator.remove();
+            }
+        }
+
     }
 
     @Override
     public void refreshWords() {
-
+        mCacheIsDirty = true;
     }
 
     @Override
     public void deleteAllWords() {
 
+        mWordsRemoteDataSource.deleteAllWords();
+        mWordsLocalDataSource.deleteAllWords();
+        if (mCachedWords == null) {
+            mCachedWords = new LinkedHashMap<>();
+        }
+        mCachedWords.clear();
     }
 
     @Override
     public void deleteWord(@NonNull String wordId) {
-
+        checkNotNull(wordId);
+        mWordsRemoteDataSource.deleteWord(wordId);
+        mWordsLocalDataSource.deleteWord(wordId);
+        mCachedWords.remove(wordId);
     }
 
     private void getWordsFromRemoteDataSource(@NonNull final LoadWordsCallback callback) {
@@ -192,4 +281,14 @@ public class WordsRepository implements WordsDataSource {
             mWordsLocalDataSource.saveWord(word);
         }
     }
+
+    private Word getWordWithId(@NonNull String id) {
+        checkNotNull(id);
+        if (mCachedWords == null || mCachedWords.isEmpty()) {
+            return null;
+        } else {
+            return mCachedWords.get(id);
+        }
+    }
+
 }
