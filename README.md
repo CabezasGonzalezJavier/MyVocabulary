@@ -1,8 +1,6 @@
 # MyVocabulary
 My Vocabulary is android app about learning new language.
-
-<img src="https://github.com/CabezasGonzalezJavier/MyVocabulary/blob/master/MyVocabulary.jpg"  
-high="300px" />
+![MyVocabulary](https://github.com/CabezasGonzalezJavier/MyVocabulary/blob/master/MyVocabulary.jpg)
 # About
   My Vocabulary is android app about learning new language.
   Libraries
