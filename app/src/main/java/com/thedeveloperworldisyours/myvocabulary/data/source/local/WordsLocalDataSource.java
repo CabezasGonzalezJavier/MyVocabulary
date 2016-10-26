@@ -194,7 +194,7 @@ public class WordsLocalDataSource implements WordsDataSource {
 
     @Override
     public void refreshWords() {
-// Not required because the {@link WordsRepository} handles the logic of refreshing the
+        // Not required because the {@link WordsRepository} handles the logic of refreshing the
         // words from all the available data sources.
     }
 
