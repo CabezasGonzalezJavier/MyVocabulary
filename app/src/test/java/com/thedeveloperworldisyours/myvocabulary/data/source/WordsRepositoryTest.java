@@ -23,6 +23,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
@@ -64,6 +66,9 @@ public class WordsRepositoryTest {
      */
     @Captor
     private ArgumentCaptor<WordsDataSource.LoadWordsCallback> mWordsCallbackCaptor;
+
+    @Captor
+    private ArgumentCaptor<WordsDataSource.GetWordCallback> mWordCallbackCaptor;
 
     @Before
     public void setupWordsRepository() {
@@ -211,33 +216,93 @@ public class WordsRepositoryTest {
         assertFalse(mWordsRepository.mCachedWords.containsKey(newWord.getId()));
     }
 
+    @Test
+    public void getWordWithDirtyCache_wordAreRetrievedFromRemote() {
+        mWordsRepository.refreshWords();
+        mWordsRepository.getWords(mLoadWordsCallback);
+
+        setWordsAvailable(mWordsRemoteDataSource, sWords);
+
+        verify(mWordsLocalDataSource, never()).getWords(mLoadWordsCallback);
+        verify(mLoadWordsCallback).onWordsLoaded(sWords);
+
+    }
+
+    @Test
+    public void getWordWithLocalDataSourcedSourcesUnavailable_WordsAreRetrievedFromRemote() {
+
+        mWordsRepository.getWords(mLoadWordsCallback);
+
+        setWordsNotAvailable(mWordsLocalDataSource);
+
+        setWordsAvailable(mWordsRemoteDataSource, sWords);
+
+        verify(mLoadWordsCallback).onWordsLoaded(sWords);
+
+    }
+
+    @Test
+    public void getWordsWithBothDataSourcesUnavailable_firesOnDataUnavailable() {
+        mWordsRepository.getWords(mLoadWordsCallback);
+
+        setWordsNotAvailable(mWordsLocalDataSource);
+        setWordsNotAvailable(mWordsRemoteDataSource);
+
+        verify(mLoadWordsCallback).onDataNotAvailable();
+    }
+
+    @Test
+    public void getWordWithBothDataSourcesUnavailable_firesOnDataUnavailable() {
+        final String wordId = "123";
+
+        mWordsRepository.getWord(wordId, mGetWordCallback);
+
+        setWordNotAvailable(mWordsLocalDataSource, wordId);
+
+        setWordNotAvailable(mWordsRemoteDataSource, wordId);
+
+        verify(mGetWordCallback).onDataNotAvailable();
+    }
+
+    @Test
+    public void getWord_refreshLocalDataSource() {
+        mWordsRepository.refreshWords();
+
+        mWordsRepository.getWords(mLoadWordsCallback);
+
+        setWordsAvailable(mWordsRemoteDataSource, sWords);
+
+        verify(mWordsLocalDataSource, times(sWords.size())).saveWord(any(Word.class));
+    }
+
 //    @Test
-//    public void getWordWithDirtyCache_wordAreRetrievedFromRemote() {
-//        mWordsRepository.refreshWords();
-//        mWordsRepository.getWords(mLoadWordsCallback);
+//    public void twoWordsLoadCallsToRepository(WordsDataSource.LoadWordsCallback callback) {
+//        mWordsRepository.getWords(callback);
 //
+//        verify(mWordsLocalDataSource).getWords(mWordsCallbackCaptor.capture());
 //
-//        verify(mLoadWordsCallback).onWordsLoaded(sWords);
+//        mWordsCallbackCaptor.getValue().onDataNotAvailable();
 //
+//        verify(mWordsRemoteDataSource).getWords(mWordsCallbackCaptor.capture());
+//
+//        mWordsCallbackCaptor.getValue().onWordsLoaded(sWords);
+//
+//        mWordsRepository.getWords(callback);
 //    }
 
-//    private void setWordNotAvailable(WordsDataSource dataSource) {
-//        verify(dataSource).getWords(mWordsCallbackCaptor.capture());
-//        mWordsCallbackCaptor.getValue().onDataNotAvailable();
-//    }
-//
-//    private void setWordAvailable(WordsDataSource dataSource, List<Word> words) {
-//        verify(dataSource).getWords(mWordsCallbackCaptor.capture());
-//        mWordsCallbackCaptor.getValue().onWordsLoaded(words);
-//    }
-//
-//    private void setWordNotAvailable(WordsDataSource dataSource, String wordId){
-//        verify(dataSource).getWord(eq(wordId), mWordsCallbackCaptor.capture());
-//        mWordsCallbackCaptor.getValue().onDataNotAvailable();
-//    }
-//
-//    private void setWordAvailable(WordsDataSource dataSource, Word word) {
-//        verify(dataSource).getWord(eq(word.getId()), mWordsCallbackCaptor.capture());
-//        mWordsCallbackCaptor.getValue().onWordsLoaded(word);
-//    }
+    private void setWordsNotAvailable(WordsDataSource dataSource) {
+        verify(dataSource).getWords(mWordsCallbackCaptor.capture());
+        mWordsCallbackCaptor.getValue().onDataNotAvailable();
+    }
+
+    private void setWordsAvailable(WordsDataSource dataSource, List<Word> words) {
+        verify(dataSource).getWords(mWordsCallbackCaptor.capture());
+        mWordsCallbackCaptor.getValue().onWordsLoaded(words);
+    }
+
+    private void setWordNotAvailable(WordsDataSource dataSource, String wordId){
+        verify(dataSource).getWord(eq(wordId), mWordCallbackCaptor.capture());
+        mWordCallbackCaptor.getValue().onDataNotAvailable();
+    }
+
 }
