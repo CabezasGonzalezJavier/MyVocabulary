@@ -66,7 +66,7 @@ public interface WordsContract {
 
         void completeWord(@NonNull Word completedWord);
 
-        void activeteWord(@NonNull Word activeWord);
+        void activateWord(@NonNull Word activeWord);
 
         void clearCompletedWord();
 
