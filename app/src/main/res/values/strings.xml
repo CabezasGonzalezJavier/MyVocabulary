@@ -2,10 +2,25 @@
     <string name="app_name">My Vocabulary</string>
 
     <string name="fragment_words_no_data">No data</string>
+    <string name="fragment_words_label_all">All Words</string>
+    <string name="fragment_words_label_active">Active Words</string>
+    <string name="fragment_words_label_completed">Completed Words</string>
+    <string name="fragment_words_completed_words_cleared">Completed words cleared</string>
+    <string name="fragment_words_loading_words_error">Error while loading words</string>
+    <string name="fragment_words_marked_complete">Word marked complete</string>
+    <string name="fragment_words_marked_active">Word marked active</string>
 
     <string name="refresh">Refresh</string>
+
+    <string name="menu_all">All</string>
+    <string name="menu_active">Active</string>
+    <string name="menu_completed">Completed</string>
+
     <string name="menu_filter">Filter</string>
     <string name="menu_clear">Clear completed</string>
     <string name="menu_delete_task">Delete task</string>
+
+    <string name="drawable_list_title">Words list</string>
+    <string name="drawable_statistics">Statistics</string>
 
 </resources>

@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.thedeveloperworldisyours.myvocabulary.words.WordsActivity">
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/activity_words_toolbar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
@@ -27,26 +27,36 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/activity_words_coordinator_layout"
+            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <FrameLayout
-                android:id="@+id/activity_words_content_frame"
+                android:id="@+id/contentFrame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/activity_words_fab_edit_word_done"
+                android:id="@+id/fab_add_task"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_input_add"
+                android:src="@android:drawable/ic_menu_add"
                 app:fabSize="normal"
-                app:layout_anchor="@id/activity_words_content_frame"
+                app:layout_anchor="@id/contentFrame"
                 app:layout_anchorGravity="bottom|right|end" />
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
+
+    <!-- Navigation Drawer -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_actions" />
 
 </android.support.v4.widget.DrawerLayout>

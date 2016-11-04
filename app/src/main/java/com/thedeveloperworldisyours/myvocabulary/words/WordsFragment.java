@@ -1,17 +1,17 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.thedeveloperworldisyours.myvocabulary.R;
@@ -33,8 +33,11 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     @BindView(R.id.fragment_words_recycler_view)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.fragment_words_text_view)
-    TextView mTextView;
+    @BindView(R.id.fragment_words_filtering_label)
+    TextView mFilteringLabelView;
+
+    @BindView(R.id.fragment_words_no_data_text_view)
+    TextView mNoDataTextView;
 
     @BindView(R.id.fragment_words_refresh_layout)
     ScrollChildSwipeRefreshLayout mRefresh;
@@ -98,6 +101,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -112,6 +116,10 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                 break;
         }
         return true;
+    }
+
+    private void showMessage(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -132,57 +140,59 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showWordMarkedComplete() {
-
+        showMessage(getString(R.string.fragment_words_marked_complete));
     }
 
     @Override
     public void showWordMarkedActive() {
-
+        showMessage(getString(R.string.fragment_words_marked_active));
     }
 
     @Override
     public void showCompletedWordsCleared() {
-
+        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_completed_words_cleared));
     }
 
     @Override
     public void showLoadingWordsError() {
-
+        showMessage(getString(R.string.fragment_words_loading_words_error));
     }
 
     @Override
     public void showNoWords() {
+        mRecyclerView.setVisibility(View.GONE);
+        mNoDataTextView.setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void showActiveFilterLabel() {
-
+        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_label_active));
     }
 
     @Override
     public void showCompletedFilterLabel() {
-
+        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_label_completed));
     }
 
     @Override
     public void showAllFilterLabel() {
-
+        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_label_all));
     }
 
     @Override
     public void showNoActiveWords() {
-
+//        No now
     }
 
     @Override
     public void showNoCompletedWords() {
-
+//        No now
     }
 
     @Override
     public void showSuccessfullySavedMessage() {
-
+//        No now
     }
 
     @Override
@@ -192,8 +202,28 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showFilteringPopUpMenu() {
+        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
+        popup.getMenuInflater().inflate(R.menu.filter_words, popup.getMenu());
 
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.active:
+                        mPresenter.setFiltering(WordsFilterType.ACTIVE_WORDS);
+                        break;
+                    case R.id.completed:
+                        mPresenter.setFiltering(WordsFilterType.COMPLETED_WORDS);
+                        break;
+                    default:
+                        mPresenter.setFiltering(WordsFilterType.ALL_WORDS);
+                        break;
+                }
+                mPresenter.loadWords(false);
+                return true;
+            }
+        });
 
+        popup.show();
     }
 
     @Override
