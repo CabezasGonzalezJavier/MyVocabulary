@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +60,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new WordsRecyclerViewAdapter(mWordList);
+        mAdapter = new WordsRecyclerViewAdapter(new ArrayList<Word>(0));
     }
 
     @Override
@@ -66,6 +68,9 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_words, container, false);
+
+        ButterKnife.bind(this, view);
+
         mRecyclerView.setHasFixedSize(true);
 
 
@@ -197,7 +202,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 
     @Override
