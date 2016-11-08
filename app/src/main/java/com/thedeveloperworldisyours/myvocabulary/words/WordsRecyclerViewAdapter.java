@@ -36,10 +36,10 @@ public class WordsRecyclerViewAdapter extends RecyclerView
             .OnClickListener {
 
         @Nullable
-        @BindView(R.id.list_item_word_complete)
+        @BindView(R.id.words_list_item_complete)
         CheckBox mCheckBox;
         @Nullable
-        @BindView(R.id.list_item_word_title)
+        @BindView(R.id.words_list_item_title)
         TextView mTitle;
 
         public DataObjectHolder(View itemView) {
@@ -68,7 +68,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
     public DataObjectHolder onCreateViewHolder(ViewGroup parent,
                                                int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_words, parent, false);
+                .inflate(R.layout.words_list_item, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -110,6 +110,5 @@ public class WordsRecyclerViewAdapter extends RecyclerView
 
         void onActivateWordClick(Word activatedWord);
     }
-
 
 }

@@ -25,29 +25,29 @@ public class WordsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_words);
+        setContentView(R.layout.words_act);
         // Set up the toolbar.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_words_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.words_act_toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        // Set up the navigation drawer.
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Set up the navigation drawer_text_color_selector.
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.words_act_drawer_layout);
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.words_act_nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
 
         WordsFragment wordsFragment =
-                (WordsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_words_content_frame);
+                (WordsFragment) getSupportFragmentManager().findFragmentById(R.id.words_act_contentFrame);
         if (wordsFragment == null) {
             // Create the fragment
             wordsFragment = WordsFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), wordsFragment, R.id.activity_words_content_frame);
+                    getSupportFragmentManager(), wordsFragment, R.id.words_act_contentFrame);
         }
 
         // Create the presenter
@@ -73,7 +73,7 @@ public class WordsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // Open the navigation drawer when the home icon is selected from the toolbar.
+                // Open the navigation drawer_text_color_selector when the home icon is selected from the toolbar.
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
@@ -99,7 +99,7 @@ public class WordsActivity extends AppCompatActivity {
                             default:
                                 break;
                         }
-                        // Close the navigation drawer when an item is selected.
+                        // Close the navigation drawer_text_color_selector when an item is selected.
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         return true;

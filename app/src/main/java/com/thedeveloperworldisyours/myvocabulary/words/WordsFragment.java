@@ -3,6 +3,7 @@ package com.thedeveloperworldisyours.myvocabulary.words;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,16 +33,16 @@ import butterknife.ButterKnife;
  */
 public class WordsFragment extends Fragment implements WordsContract.View, WordsRecyclerViewAdapter.WordItemListener {
 
-    @BindView(R.id.fragment_words_recycler_view)
+    @BindView(R.id.words_frag_recycler_view)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.fragment_words_filtering_label)
+    @BindView(R.id.words_frag_filtering_label)
     TextView mFilteringLabelView;
 
-    @BindView(R.id.fragment_words_no_data_text_view)
+    @BindView(R.id.words_frag_no_data_text_view)
     TextView mNoDataTextView;
 
-    @BindView(R.id.fragment_words_refresh_layout)
+    @BindView(R.id.words_frag_refresh_layout)
     ScrollChildSwipeRefreshLayout mRefresh;
 
     private WordsContract.Presenter mPresenter;
@@ -67,7 +68,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_words, container, false);
+        View view = inflater.inflate(R.layout.words_frag, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -82,6 +83,19 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 //        RecyclerView.ItemDecoration itemDecoration =
 //                new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL);
 //        mRecyclerView.addItemDecoration(itemDecoration);
+
+        // Set up floating action button
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.words_act_fab_add_task);
+
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mPresenter.addNewTask();
+            }
+        });
+
         return view;
     }
 
