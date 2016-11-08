@@ -9,18 +9,8 @@
         android:layout_height="match_parent"
         tools:context="com.thedeveloperworldisyours.myvocabulary.words.WordsFragment">
 
-        <TextView
-            android:id="@+id/words_frag_filtering_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/words_frag_recycler_view"
-            android:layout_below="@+id/words_frag_filtering_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

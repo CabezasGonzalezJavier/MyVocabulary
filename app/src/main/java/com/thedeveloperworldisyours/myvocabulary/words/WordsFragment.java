@@ -1,5 +1,6 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,9 +37,6 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     @BindView(R.id.words_frag_recycler_view)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.words_frag_filtering_label)
-    TextView mFilteringLabelView;
-
     @BindView(R.id.words_frag_no_data_text_view)
     TextView mNoDataTextView;
 
@@ -48,6 +46,8 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     private WordsContract.Presenter mPresenter;
     private WordsRecyclerViewAdapter mAdapter;
     private List<Word> mWordList;
+
+    private WordsInteractionListener mListener;
 
     public WordsFragment() {
         // Required empty public constructor
@@ -169,7 +169,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showCompletedWordsCleared() {
-        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_completed_words_cleared));
+        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_completed_words_cleared));
     }
 
     @Override
@@ -186,17 +186,17 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showActiveFilterLabel() {
-        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_label_active));
+        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_active));
     }
 
     @Override
     public void showCompletedFilterLabel() {
-        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_label_completed));
+        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_completed));
     }
 
     @Override
     public void showAllFilterLabel() {
-        mFilteringLabelView.setText(getResources().getString(R.string.fragment_words_label_all));
+        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_all));
     }
 
     @Override
@@ -263,5 +263,22 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     @Override
     public void onActivateWordClick(Word activatedWord) {
         mPresenter.activateWord(activatedWord);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof WordsInteractionListener) {
+            //init the listener
+            mListener = (WordsInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement InteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }

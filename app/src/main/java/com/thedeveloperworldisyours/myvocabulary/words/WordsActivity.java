@@ -23,29 +23,27 @@ import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
 
 import static com.thedeveloperworldisyours.myvocabulary.R.style.styleActionBar;
 
-public class WordsActivity extends AppCompatActivity {
+public class WordsActivity extends AppCompatActivity implements WordsInteractionListener{
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
 
     private DrawerLayout mDrawerLayout;
 
     private WordsPresenter mWordsPresenter;
+    private ActionBar mActionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.words_act);
 
 
-        SpannableString s = new SpannableString(getString(R.string.app_name));
-        s.setSpan(new TextAppearanceSpan(this, styleActionBar), 0, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        s.setSpan(new TypefaceSpan(this, "candy.ttf"), 0, s.length(),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.words_act_toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(s);
+        mActionBar = getSupportActionBar();
+        mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setTitle(spannableStringActionBar(getString(R.string.app_name)));
 
         // Set up the navigation drawer_text_color_selector.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.words_act_drawer_layout);
@@ -126,4 +124,15 @@ public class WordsActivity extends AppCompatActivity {
         return EspressoIdlingResource.getIdlingResource();
     }
 
+    @Override
+    public void onFragmentInteraction(String string) {
+        mActionBar.setTitle(spannableStringActionBar(string));
+    }
+    public SpannableString spannableStringActionBar(String string) {
+        SpannableString spannableString = new SpannableString(string);
+        spannableString.setSpan(new TextAppearanceSpan(this, styleActionBar), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new TypefaceSpan(this, "candy.ttf"), 0, spannableString.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
+    }
 }
