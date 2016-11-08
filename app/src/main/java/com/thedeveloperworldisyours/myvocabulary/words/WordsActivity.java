@@ -9,12 +9,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.TextAppearanceSpan;
 import android.view.MenuItem;
 
 import com.thedeveloperworldisyours.myvocabulary.Injection;
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
+import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
+
+import static com.thedeveloperworldisyours.myvocabulary.R.style.styleActionBar;
 
 public class WordsActivity extends AppCompatActivity {
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
@@ -26,12 +33,19 @@ public class WordsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.words_act);
+
+
+        SpannableString s = new SpannableString(getString(R.string.app_name));
+        s.setSpan(new TextAppearanceSpan(this, styleActionBar), 0, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new TypefaceSpan(this, "candy.ttf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.words_act_toolbar);
         setSupportActionBar(toolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(s);
 
         // Set up the navigation drawer_text_color_selector.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.words_act_drawer_layout);
@@ -111,4 +125,5 @@ public class WordsActivity extends AppCompatActivity {
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();
     }
+
 }
