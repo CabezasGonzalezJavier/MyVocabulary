@@ -14,7 +14,7 @@ import java.util.List;
  * Main entry point for accessing words data.
  */
 public interface WordsDataSource {
-    interface LoadWordsCallback {
+    interface   LoadWordsCallback {
 
         void onWordsLoaded(List<Word> words);
 

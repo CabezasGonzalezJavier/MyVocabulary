@@ -30,7 +30,7 @@ public interface WordsContract {
 
         void showWordMarkedActive();
 
-        void showCompletedWordsCleared();
+        void showLearnedWordsCleared();
 
         void showLoadingWordsError();
 
@@ -38,7 +38,7 @@ public interface WordsContract {
 
         void showActiveFilterLabel();
 
-        void showCompletedFilterLabel();
+        void showLearnedFilterLabel();
 
         void showAllFilterLabel();
 
@@ -64,11 +64,11 @@ public interface WordsContract {
 
         void openWordDetails(@NonNull Word requestedWord);
 
-        void completeWord(@NonNull Word completedWord);
+        void learnWord(@NonNull Word completedWord);
 
         void activateWord(@NonNull Word activeWord);
 
-        void clearCompletedWord();
+        void clearLearnedWord();
 
         void setFiltering(WordsFilterType requestType);
 

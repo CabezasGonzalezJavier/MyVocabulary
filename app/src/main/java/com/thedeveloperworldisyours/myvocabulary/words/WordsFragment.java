@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,7 +170,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     }
 
     @Override
-    public void showCompletedWordsCleared() {
+    public void showLearnedWordsCleared() {
         mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_completed_words_cleared));
     }
 
@@ -190,7 +192,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     }
 
     @Override
-    public void showCompletedFilterLabel() {
+    public void showLearnedFilterLabel() {
         mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_completed));
     }
 
@@ -220,6 +222,11 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.filter_words, menu);
+    }
+
+    @Override
     public void showFilteringPopUpMenu() {
         PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
         popup.getMenuInflater().inflate(R.menu.filter_words, popup.getMenu());
@@ -231,7 +238,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                         mPresenter.setFiltering(WordsFilterType.ACTIVE_WORDS);
                         break;
                     case R.id.completed:
-                        mPresenter.setFiltering(WordsFilterType.COMPLETED_WORDS);
+                        mPresenter.setFiltering(WordsFilterType.LEARNED_WORDS);
                         break;
                     default:
                         mPresenter.setFiltering(WordsFilterType.ALL_WORDS);
@@ -257,7 +264,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void onCompleteWordClick(Word completedWord) {
-        mPresenter.completeWord(completedWord);
+        mPresenter.learnWord(completedWord);
     }
 
     @Override

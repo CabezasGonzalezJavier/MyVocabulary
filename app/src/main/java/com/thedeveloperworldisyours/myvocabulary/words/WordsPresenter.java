@@ -63,8 +63,9 @@ public class WordsPresenter implements WordsContract.Presenter{
     }
 
     @Override
-    public void completeWord(@NonNull Word completedWord) {
+    public void learnWord(@NonNull Word completedWord) {
         checkNotNull(completedWord, "completedWord");
+        mWordsRepository.learnedWord(completedWord);
         mWordsView.showWordMarkedComplete();
         loadWords(false, false);
 
@@ -79,9 +80,9 @@ public class WordsPresenter implements WordsContract.Presenter{
     }
 
     @Override
-    public void clearCompletedWord() {
+    public void clearLearnedWord() {
         mWordsRepository.clearLearnedWords();
-        mWordsView.showCompletedWordsCleared();
+        mWordsView.showLearnedWordsCleared();
         loadWords(false, false);
     }
 
@@ -129,7 +130,7 @@ public class WordsPresenter implements WordsContract.Presenter{
                                 wordsToShow.add(word);
                             }
                             break;
-                        case COMPLETED_WORDS:
+                        case LEARNED_WORDS:
                             if (word.isLearned()) {
                                 wordsToShow.add(word);
                             }
@@ -176,7 +177,7 @@ public class WordsPresenter implements WordsContract.Presenter{
             case ACTIVE_WORDS:
                 mWordsView.showActiveFilterLabel();
                 break;
-            case COMPLETED_WORDS:
+            case LEARNED_WORDS:
                 mWordsView.showAllFilterLabel();
                 break;
             default:
@@ -190,7 +191,7 @@ public class WordsPresenter implements WordsContract.Presenter{
             case ACTIVE_WORDS:
                 mWordsView.showNoActiveWords();
                 break;
-            case COMPLETED_WORDS:
+            case LEARNED_WORDS:
                 mWordsView.showNoCompletedWords();
                 break;
             default:

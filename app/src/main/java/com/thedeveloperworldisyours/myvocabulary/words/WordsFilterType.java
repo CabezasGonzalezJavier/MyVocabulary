@@ -18,7 +18,7 @@ public enum  WordsFilterType {
     ACTIVE_WORDS,
 
     /**
-     * Filters only the completed words.
+     * Filters only the learned words.
      */
-    COMPLETED_WORDS
+    LEARNED_WORDS
 }
