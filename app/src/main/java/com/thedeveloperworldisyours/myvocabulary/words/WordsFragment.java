@@ -1,5 +1,7 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.thedeveloperworldisyours.myvocabulary.R;
@@ -27,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +51,9 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @BindView(R.id.words_frag_refresh_layout)
     ScrollChildSwipeRefreshLayout mRefresh;
+
+    @BindView(R.id.words_frag_filter_view)
+    LinearLayout mFilterView;
 
     private WordsContract.Presenter mPresenter;
     private WordsRecyclerViewAdapter mAdapter;
@@ -132,13 +141,25 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                 mPresenter.clearLearnedWord();
                 break;
             case R.id.menu_filter:
-                showFilteringPopUpMenu();
+                mFilterView.setVisibility(View.VISIBLE);
+                startAnimation(mFilterView);
                 break;
             case R.id.menu_refresh:
                 mPresenter.loadWords(true);
                 break;
         }
         return true;
+    }
+
+    private void startAnimation(View view) {
+        view.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+                R.anim.slid_down));
+    }
+
+    public void finishAnimation(final View view) {
+        view.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+                R.anim.slid_up));
+        view.setVisibility(View.GONE);
     }
 
     private void showMessage(String message) {
@@ -232,33 +253,28 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.words_fragment_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public void showFilteringPopUpMenu() {
-        PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id.menu_filter));
-        popup.getMenuInflater().inflate(R.menu.filter_words, popup.getMenu());
+    @OnClick(R.id.words_frag_all_button)
+    public void allWords() {
+        filted(WordsFilterType.ALL_WORDS);
+    }
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.active:
-                        mPresenter.setFiltering(WordsFilterType.ACTIVE_WORDS);
-                        break;
-                    case R.id.learned:
-                        mPresenter.setFiltering(WordsFilterType.LEARNED_WORDS);
-                        break;
-                    default:
-                        mPresenter.setFiltering(WordsFilterType.ALL_WORDS);
-                        break;
-                }
-                mPresenter.loadWords(false);
-                return true;
-            }
-        });
+    @OnClick(R.id.words_frag_active_button)
+    public void activeWords() {
+        filted(WordsFilterType.ACTIVE_WORDS);
+    }
 
-        popup.show();
+    @OnClick(R.id.words_frag_learned_button)
+    public void learnWords() {
+        filted(WordsFilterType.LEARNED_WORDS);
+    }
+
+    public void filted(WordsFilterType filterType) {
+        mPresenter.setFiltering(filterType);
+        mPresenter.loadWords(false);
+        finishAnimation(mFilterView);
     }
 
     @Override
@@ -280,6 +296,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     public void onActivateWordClick(Word activatedWord) {
         mPresenter.activateWord(activatedWord);
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

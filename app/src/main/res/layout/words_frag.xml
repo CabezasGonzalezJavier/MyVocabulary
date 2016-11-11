@@ -1,4 +1,5 @@
 <com.thedeveloperworldisyours.myvocabulary.words.ScrollChildSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/words_frag_refresh_layout"
     android:layout_width="match_parent"
@@ -19,8 +20,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:text="@string/fragment_words_no_data"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/words_frag_filter_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text="@string/fragment_words_no_data" />
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/words_frag_all_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/fragment_words_label_all"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/words_frag_active_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/fragment_words_label_active"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/words_frag_learned_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/fragment_words_label_learned"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
 
     </RelativeLayout>
 </com.thedeveloperworldisyours.myvocabulary.words.ScrollChildSwipeRefreshLayout>

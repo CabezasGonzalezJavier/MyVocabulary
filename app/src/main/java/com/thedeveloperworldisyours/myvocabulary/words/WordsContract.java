@@ -50,7 +50,6 @@ public interface WordsContract {
 
         boolean isActive();
 
-        void showFilteringPopUpMenu();
 
     }
 
