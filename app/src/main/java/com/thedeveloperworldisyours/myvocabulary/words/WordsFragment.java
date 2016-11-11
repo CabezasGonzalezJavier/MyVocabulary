@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
+import com.thedeveloperworldisyours.myvocabulary.util.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
         super.onCreate(savedInstanceState);
 
         mAdapter = new WordsRecyclerViewAdapter(new ArrayList<Word>(0));
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -82,9 +84,9 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
 
         mRecyclerView.setAdapter(mAdapter);
-//        RecyclerView.ItemDecoration itemDecoration =
-//                new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL);
-//        mRecyclerView.addItemDecoration(itemDecoration);
+        RecyclerView.ItemDecoration itemDecoration =
+                new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+        mRecyclerView.addItemDecoration(itemDecoration);
 
         // Set up floating action button
         FloatingActionButton fab =
@@ -127,13 +129,13 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_clear:
-//                mPresenter.clearCompletedTasks();
+                mPresenter.clearLearnedWord();
                 break;
             case R.id.menu_filter:
                 showFilteringPopUpMenu();
                 break;
             case R.id.menu_refresh:
-//                mPresenter.loadTasks(true);
+                mPresenter.loadWords(true);
                 break;
         }
         return true;
@@ -145,7 +147,8 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showWords(List<Word> words) {
-
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mNoDataTextView.setVisibility(View.GONE);
         mAdapter.replaceData(words);
     }
 
@@ -171,7 +174,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showLearnedWordsCleared() {
-        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_completed_words_cleared));
+        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_learned_words_cleared));
     }
 
     @Override
@@ -181,6 +184,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showNoWords() {
+        mNoDataTextView.setText(getString(R.string.fragment_word_no_active_word));
         mRecyclerView.setVisibility(View.GONE);
         mNoDataTextView.setVisibility(View.VISIBLE);
 
@@ -193,7 +197,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showLearnedFilterLabel() {
-        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_completed));
+        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_learned));
     }
 
     @Override
@@ -203,12 +207,16 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showNoActiveWords() {
-//        No now
+        mNoDataTextView.setText(getString(R.string.fragment_word_no_active_word));
+        mRecyclerView.setVisibility(View.GONE);
+        mNoDataTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void showNoCompletedWords() {
-//        No now
+    public void showNoLearnedWords() {
+        mNoDataTextView.setText(getString(R.string.fragment_word_no_learned_word));
+        mRecyclerView.setVisibility(View.GONE);
+        mNoDataTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -223,7 +231,8 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.filter_words, menu);
+        inflater.inflate(R.menu.words_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override
@@ -237,7 +246,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                     case R.id.active:
                         mPresenter.setFiltering(WordsFilterType.ACTIVE_WORDS);
                         break;
-                    case R.id.completed:
+                    case R.id.learned:
                         mPresenter.setFiltering(WordsFilterType.LEARNED_WORDS);
                         break;
                     default:

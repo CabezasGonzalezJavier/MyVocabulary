@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by javierg on 31/10/2016.
  */
 
-public class WordsPresenter implements WordsContract.Presenter{
+public class WordsPresenter implements WordsContract.Presenter {
 
     private final WordsRepository mWordsRepository;
 
@@ -26,7 +26,7 @@ public class WordsPresenter implements WordsContract.Presenter{
 
     private boolean mFirstLoad = true;
 
-    public WordsPresenter(@NonNull WordsRepository wordsRepository,@NonNull WordsContract.View wordsView) {
+    public WordsPresenter(@NonNull WordsRepository wordsRepository, @NonNull WordsContract.View wordsView) {
         mWordsRepository = checkNotNull(wordsRepository, "WordsRepository cannot be null");
         mWordsView = checkNotNull(wordsView, "WordsView cannot be null!");
 
@@ -168,8 +168,8 @@ public class WordsPresenter implements WordsContract.Presenter{
             processEmptyWords();
         } else {
             mWordsView.showWords(words);
-            showFilterLabel();
         }
+        showFilterLabel();
     }
 
     private void showFilterLabel() {
@@ -178,7 +178,7 @@ public class WordsPresenter implements WordsContract.Presenter{
                 mWordsView.showActiveFilterLabel();
                 break;
             case LEARNED_WORDS:
-                mWordsView.showAllFilterLabel();
+                mWordsView.showLearnedFilterLabel();
                 break;
             default:
                 mWordsView.showAllFilterLabel();
@@ -192,7 +192,7 @@ public class WordsPresenter implements WordsContract.Presenter{
                 mWordsView.showNoActiveWords();
                 break;
             case LEARNED_WORDS:
-                mWordsView.showNoCompletedWords();
+                mWordsView.showNoLearnedWords();
                 break;
             default:
                 mWordsView.showNoWords();

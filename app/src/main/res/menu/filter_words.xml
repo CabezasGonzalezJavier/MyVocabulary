@@ -7,6 +7,6 @@
         android:id="@+id/active"
         android:title="@string/menu_active" />
     <item
-        android:id="@+id/completed"
-        android:title="@string/menu_completed" />
+        android:id="@+id/learned"
+        android:title="@string/menu_learned" />
 </menu>

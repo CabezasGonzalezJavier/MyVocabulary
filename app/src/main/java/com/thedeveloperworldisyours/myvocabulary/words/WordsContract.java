@@ -44,7 +44,7 @@ public interface WordsContract {
 
         void showNoActiveWords();
 
-        void showNoCompletedWords();
+        void showNoLearnedWords();
 
         void showSuccessfullySavedMessage();
 

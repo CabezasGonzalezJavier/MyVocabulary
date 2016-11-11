@@ -127,7 +127,6 @@ public class WordsPresenterTest {
         verify(mView).showLearnedWordsCleared();
     }
 
-
     @Test
     public void learnWord() {
         mWordsPresenter.loadWords(true);

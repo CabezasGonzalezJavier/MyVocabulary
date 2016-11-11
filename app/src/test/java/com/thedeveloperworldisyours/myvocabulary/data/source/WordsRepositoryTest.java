@@ -119,7 +119,6 @@ public class WordsRepositoryTest {
         assertFalse(mWordsRepository.mCachedWords.get(newWord.getId()).isActive());
     }
 
-
     @Test
     public void learnWordId_completesWordToServiceAPIUpdatesCache() {
 

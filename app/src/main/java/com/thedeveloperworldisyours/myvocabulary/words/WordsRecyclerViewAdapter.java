@@ -84,7 +84,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
     }
 
     public void replaceData(List<Word> wordList) {
-        this.setList(mWordList);
+        this.setList(wordList);
         notifyDataSetChanged();
     }
 
