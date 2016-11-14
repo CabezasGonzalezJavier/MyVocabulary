@@ -1,7 +1,7 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.thedeveloperworldisyours.myvocabulary.R;
@@ -141,8 +139,11 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                 mPresenter.clearLearnedWord();
                 break;
             case R.id.menu_filter:
-                mFilterView.setVisibility(View.VISIBLE);
-                startAnimation(mFilterView);
+                if (mFilterView.getVisibility() == View.VISIBLE) {
+                    finishAnimation();
+                } else {
+                    startAnimation();
+                }
                 break;
             case R.id.menu_refresh:
                 mPresenter.loadWords(true);
@@ -151,15 +152,38 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
         return true;
     }
 
-    private void startAnimation(View view) {
-        view.startAnimation(AnimationUtils.loadAnimation(getActivity(),
-                R.anim.slid_down));
+    public void startListAnimation(){
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mRecyclerView, "translationY", 100f);
+        animator.setRepeatCount(0);
+        animator.setDuration(1000);
+
+        AnimatorSet set = new AnimatorSet();
+        set.play(animator);
+        set.start();
     }
 
-    public void finishAnimation(final View view) {
-        view.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+    private void startAnimation() {
+        mFilterView.setVisibility(View.VISIBLE);
+        mFilterView.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+                R.anim.slid_down));
+        startListAnimation();
+    }
+
+    public void finishAnimation() {
+        mFilterView.startAnimation(AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slid_up));
-        view.setVisibility(View.GONE);
+        mFilterView.setVisibility(View.GONE);
+        finishListAnimation();
+
+    }
+    public void finishListAnimation(){
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mRecyclerView, "translationY", 0f);
+        animator.setRepeatCount(0);
+        animator.setDuration(1000);
+
+        AnimatorSet set = new AnimatorSet();
+        set.play(animator);
+        set.start();
     }
 
     private void showMessage(String message) {
@@ -274,7 +298,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     public void filted(WordsFilterType filterType) {
         mPresenter.setFiltering(filterType);
         mPresenter.loadWords(false);
-        finishAnimation(mFilterView);
+        finishAnimation();
     }
 
     @Override
