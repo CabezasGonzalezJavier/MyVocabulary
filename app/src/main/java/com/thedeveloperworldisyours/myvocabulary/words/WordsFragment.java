@@ -71,7 +71,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new WordsRecyclerViewAdapter(new ArrayList<Word>(0));
+        mAdapter = new WordsRecyclerViewAdapter(new ArrayList<Word>(0), this);
         setHasOptionsMenu(true);
     }
 
@@ -139,7 +139,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
                 mPresenter.clearLearnedWord();
                 break;
             case R.id.menu_filter:
-                if (mFilterView.getVisibility() == View.VISIBLE) {
+                if (mFilterView.isShown()) {
                     finishAnimation();
                 } else {
                     startAnimation();
@@ -152,8 +152,8 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
         return true;
     }
 
-    public void startListAnimation(){
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mRecyclerView, "translationY", 100f);
+    public void startListAnimation(View view){
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationY", 100f);
         animator.setRepeatCount(0);
         animator.setDuration(1000);
 
@@ -166,18 +166,27 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
         mFilterView.setVisibility(View.VISIBLE);
         mFilterView.startAnimation(AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slid_down));
-        startListAnimation();
+        if (mRecyclerView.isShown()) {
+            startListAnimation(mRecyclerView);
+        } else {
+            startListAnimation(mNoDataTextView);
+        }
     }
 
     public void finishAnimation() {
         mFilterView.startAnimation(AnimationUtils.loadAnimation(getActivity(),
                 R.anim.slid_up));
         mFilterView.setVisibility(View.GONE);
-        finishListAnimation();
+        if (mRecyclerView.isShown()) {
+            finishListAnimation(mRecyclerView);
+        } else {
+            finishListAnimation(mNoDataTextView);
+        }
+
 
     }
-    public void finishListAnimation(){
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mRecyclerView, "translationY", 0f);
+    public void finishListAnimation(View view){
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationY", 0f);
         animator.setRepeatCount(0);
         animator.setDuration(1000);
 
@@ -312,7 +321,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     }
 
     @Override
-    public void onCompleteWordClick(Word completedWord) {
+    public void onLearnedWordClick(Word completedWord) {
         mPresenter.learnWord(completedWord);
     }
 
@@ -338,4 +347,5 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
         super.onDetach();
         mListener = null;
     }
+
 }

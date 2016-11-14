@@ -88,10 +88,10 @@ public class WordsRepository implements WordsDataSource {
             return;
         }
 
-        if (mCacheIsDirty) {
-            //if the cache is dirty we need to fetch new data from the network.
-            getWordsFromRemoteDataSource(callback);
-        } else {
+//        if (mCacheIsDirty) {
+//            //if the cache is dirty we need to fetch new data from the network.
+//            getWordsFromRemoteDataSource(callback);
+//        } else {
             mWordsLocalDataSource.getWords(new LoadWordsCallback() {
                 @Override
                 public void onWordsLoaded(List<Word> words) {
@@ -104,7 +104,7 @@ public class WordsRepository implements WordsDataSource {
                     getWordsFromRemoteDataSource(callback);
                 }
             });
-        }
+//        }
 
     }
 

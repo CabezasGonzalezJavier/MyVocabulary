@@ -52,6 +52,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
 
         @Override
         public void onClick(View v) {
+
             sListener.onWordClick(getAdapterPosition(), v);
         }
     }
@@ -60,8 +61,9 @@ public class WordsRecyclerViewAdapter extends RecyclerView
         this.sListener = myClickListener;
     }
 
-    public WordsRecyclerViewAdapter(List<Word> myDataset) {
+    public WordsRecyclerViewAdapter(List<Word> myDataset, WordItemListener wordItemListener) {
         mWordList = myDataset;
+        sListener = wordItemListener;
     }
 
     @Override
@@ -71,12 +73,26 @@ public class WordsRecyclerViewAdapter extends RecyclerView
                 .inflate(R.layout.words_list_item, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
+
         return dataObjectHolder;
     }
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
+        final Word word = mWordList.get(position);
+
         holder.mTitle.setText(mWordList.get(position).getTitle());
+        holder.mCheckBox.setChecked(word.isLearned());
+        holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!word.isLearned()) {
+                    sListener.onLearnedWordClick(word);
+                } else {
+                    sListener.onActivateWordClick(word);
+                }
+            }
+        });
     }
 
     private void setList(List<Word> wordList) {
@@ -106,7 +122,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
     public interface WordItemListener {
         void onWordClick(int position, View v);
 
-        void onCompleteWordClick(Word completedWord);
+        void onLearnedWordClick(Word learnedWord);
 
         void onActivateWordClick(Word activatedWord);
     }

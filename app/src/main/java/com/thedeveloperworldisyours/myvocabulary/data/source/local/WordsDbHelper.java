@@ -38,6 +38,11 @@ public class WordsDbHelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Not required as at version 1
+//        Log.w(MySQLiteHelper.class.getName(),
+//                "Upgrading database from version " + oldVersion + " to "
+//                        + newVersion + ", which will destroy all old data");
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME);
+        onCreate(db);
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -1,6 +1,7 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 import com.thedeveloperworldisyours.myvocabulary.data.source.WordsDataSource;
@@ -199,4 +200,5 @@ public class WordsPresenter implements WordsContract.Presenter {
                 break;
         }
     }
+
 }
