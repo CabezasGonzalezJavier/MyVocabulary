@@ -1,17 +1,19 @@
 <resources>
     <string name="app_name">My Vocabulary</string>
+    <string name="add_word">Add Word</string>
+    <string name="edit_word">Edit Word</string>
 
-    <string name="fragment_words_no_data">No data</string>
-    <string name="fragment_words_label_all">All Words</string>
-    <string name="fragment_words_label_active">Active Words</string>
-    <string name="fragment_words_label_learned">Learned Words</string>
-    <string name="fragment_word_no_word">You should add words</string>
-    <string name="fragment_word_no_active_word">No Active Words</string>
-    <string name="fragment_word_no_learned_word">No Learned Words</string>
-    <string name="fragment_words_learned_words_cleared">Learned words cleared</string>
-    <string name="fragment_words_loading_words_error">Error while loading words</string>
-    <string name="fragment_words_marked_complete">Word marked complete</string>
-    <string name="fragment_words_marked_active">Word marked active</string>
+    <string name="words_frag_no_data">No data</string>
+    <string name="words_frag_label_all">All Words</string>
+    <string name="words_frag_label_active">Active Words</string>
+    <string name="words_frag_label_learned">Learned Words</string>
+    <string name="words_frag_no_word">You should add words</string>
+    <string name="words_frag_no_active_word">No Active Words</string>
+    <string name="words_frag_no_learned_word">No Learned Words</string>
+    <string name="words_frag_learned_words_cleared">Learned words cleared</string>
+    <string name="words_frag_loading_words_error">Error while loading words</string>
+    <string name="words_frag_marked_complete">Word marked complete</string>
+    <string name="words_frag_marked_active">Word marked active</string>
 
     <string name="refresh">Refresh</string>
 
@@ -25,5 +27,9 @@
 
     <string name="drawable_list_title">Words list</string>
     <string name="drawable_statistics">Statistics</string>
+
+    <string name="add_edit_word_frag_title_hint">Title</string>
+    <string name="add_edit_word_frag_description_hint">Enter your description here.</string>
+    <string name="add_edit_word_frag_title_empty">Title cannot be empty.</string>
 
 </resources>

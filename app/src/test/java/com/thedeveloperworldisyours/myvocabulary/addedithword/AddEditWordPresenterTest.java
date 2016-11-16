@@ -1,6 +1,6 @@
 package com.thedeveloperworldisyours.myvocabulary.addedithword;
 
-import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditTaskContract;
+import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordContract;
 import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordPresenter;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 import com.thedeveloperworldisyours.myvocabulary.data.source.WordsDataSource;
@@ -28,7 +28,7 @@ public class AddEditWordPresenterTest {
     private WordsRepository mWordsRepository;
 
     @Mock
-    private AddEditTaskContract.View mAddEditView;
+    private AddEditWordContract.View mAddEditView;
 
     /**
      * {@link ArgumentCaptor} is a powerful Mockito API to capture argument values and use them to

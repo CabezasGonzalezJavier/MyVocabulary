@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorGrey"
         tools:context="com.thedeveloperworldisyours.myvocabulary.words.WordsFragment">
 
         <LinearLayout
@@ -23,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="@string/fragment_words_label_all"
+                android:text="@string/words_frag_label_all"
                 android:textColor="@android:color/white" />
 
             <Button
@@ -32,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="@string/fragment_words_label_active"
+                android:text="@string/words_frag_label_active"
                 android:textColor="@android:color/white" />
 
             <Button
@@ -41,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="@string/fragment_words_label_learned"
+                android:text="@string/words_frag_label_learned"
                 android:textColor="@android:color/white" />
         </LinearLayout>
 
@@ -58,9 +59,9 @@
             android:layout_centerInParent="true"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="@string/fragment_words_no_data"
+            android:text="@string/words_frag_no_data"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:visibility="gone" />
-
 
     </RelativeLayout>
 </com.thedeveloperworldisyours.myvocabulary.words.ScrollChildSwipeRefreshLayout>

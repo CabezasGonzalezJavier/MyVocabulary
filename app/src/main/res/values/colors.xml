@@ -3,8 +3,7 @@
     <color name="colorPrimary">#FFAB91</color>
     <color name="colorPrimaryDark">#FF8A65</color>
     <color name="colorAccent">#F3C586</color>
-    <!--<color name="colorAccent">#A5D2BD</color>-->
     <color name="colorFleshTone">#EDD69D</color>
-    <color name="colorFleshToneDark">#F3C586</color>
     <color name="colorHair">#171D54</color>
+    <color name="colorGrey">#F4F4F4</color>
 </resources>

@@ -57,10 +57,6 @@ public class WordsRecyclerViewAdapter extends RecyclerView
         }
     }
 
-    public void setOnItemClickListener(WordItemListener myClickListener) {
-        this.sListener = myClickListener;
-    }
-
     public WordsRecyclerViewAdapter(List<Word> myDataset, WordItemListener wordItemListener) {
         mWordList = myDataset;
         sListener = wordItemListener;

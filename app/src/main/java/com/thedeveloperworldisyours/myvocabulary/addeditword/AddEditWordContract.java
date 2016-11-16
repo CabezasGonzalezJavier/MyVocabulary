@@ -7,7 +7,7 @@ import com.thedeveloperworldisyours.myvocabulary.BaseView;
  * Created by javierg on 08/11/2016.
  */
 
-public class AddEditTaskContract {
+public class AddEditWordContract {
     public interface View extends BaseView<Presenter> {
 
         void showEmptyWordError();

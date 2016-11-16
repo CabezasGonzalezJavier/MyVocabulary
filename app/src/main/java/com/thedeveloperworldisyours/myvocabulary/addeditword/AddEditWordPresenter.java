@@ -4,24 +4,23 @@ import android.support.annotation.NonNull;
 
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 import com.thedeveloperworldisyours.myvocabulary.data.source.WordsDataSource;
-import com.thedeveloperworldisyours.myvocabulary.data.source.WordsRepository;
 
 /**
  * Created by javierg on 08/11/2016.
  */
 
-public class AddEditWordPresenter implements AddEditTaskContract.Presenter, WordsDataSource.GetWordCallback {
+public class AddEditWordPresenter implements AddEditWordContract.Presenter, WordsDataSource.GetWordCallback {
 
     @NonNull
     private final WordsDataSource mWordsDataSource;
 
     @NonNull
-    private final AddEditTaskContract.View mAddEditWordView;
+    private final AddEditWordContract.View mAddEditWordView;
 
     @NonNull
     private String mWordId;
 
-    public AddEditWordPresenter(@NonNull String wordId, @NonNull WordsDataSource wordsDataSource, @NonNull AddEditTaskContract.View addEditWordView) {
+    public AddEditWordPresenter(@NonNull String wordId, @NonNull WordsDataSource wordsDataSource, @NonNull AddEditWordContract.View addEditWordView) {
         this.mWordId = wordId;
         this.mWordsDataSource = wordsDataSource;
         this.mAddEditWordView = addEditWordView;

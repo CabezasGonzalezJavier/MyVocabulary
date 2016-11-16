@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thedeveloperworldisyours.myvocabulary.R;
+import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordActivity;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 import com.thedeveloperworldisyours.myvocabulary.util.DividerItemDecoration;
 
@@ -103,7 +104,7 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mPresenter.addNewTask();
+                mPresenter.addNewWord();
             }
         });
 
@@ -208,37 +209,40 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showAddWord() {
-
+        Intent intent = new Intent( getActivity(),AddEditWordActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void showWordDetailsUi(String wordId) {
-
+//        Intent intent = new Intent(getActivity(), AddEditWordActivity.class);
+//        intent.putExtra(W)
+//        startActivityForResult(intent, );
     }
 
     @Override
     public void showWordMarkedComplete() {
-        showMessage(getString(R.string.fragment_words_marked_complete));
+        showMessage(getString(R.string.words_frag_marked_complete));
     }
 
     @Override
     public void showWordMarkedActive() {
-        showMessage(getString(R.string.fragment_words_marked_active));
+        showMessage(getString(R.string.words_frag_marked_active));
     }
 
     @Override
     public void showLearnedWordsCleared() {
-        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_learned_words_cleared));
+        mListener.onFragmentInteraction(getResources().getString(R.string.words_frag_learned_words_cleared));
     }
 
     @Override
     public void showLoadingWordsError() {
-        showMessage(getString(R.string.fragment_words_loading_words_error));
+        showMessage(getString(R.string.words_frag_loading_words_error));
     }
 
     @Override
     public void showNoWords() {
-        mNoDataTextView.setText(getString(R.string.fragment_word_no_active_word));
+        mNoDataTextView.setText(getString(R.string.words_frag_no_active_word));
         mRecyclerView.setVisibility(View.GONE);
         mNoDataTextView.setVisibility(View.VISIBLE);
 
@@ -246,29 +250,29 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showActiveFilterLabel() {
-        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_active));
+        mListener.onFragmentInteraction(getResources().getString(R.string.words_frag_label_active));
     }
 
     @Override
     public void showLearnedFilterLabel() {
-        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_learned));
+        mListener.onFragmentInteraction(getResources().getString(R.string.words_frag_label_learned));
     }
 
     @Override
     public void showAllFilterLabel() {
-        mListener.onFragmentInteraction(getResources().getString(R.string.fragment_words_label_all));
+        mListener.onFragmentInteraction(getResources().getString(R.string.words_frag_label_all));
     }
 
     @Override
     public void showNoActiveWords() {
-        mNoDataTextView.setText(getString(R.string.fragment_word_no_active_word));
+        mNoDataTextView.setText(getString(R.string.words_frag_no_active_word));
         mRecyclerView.setVisibility(View.GONE);
         mNoDataTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showNoLearnedWords() {
-        mNoDataTextView.setText(getString(R.string.fragment_word_no_learned_word));
+        mNoDataTextView.setText(getString(R.string.words_frag_no_learned_word));
         mRecyclerView.setVisibility(View.GONE);
         mNoDataTextView.setVisibility(View.VISIBLE);
     }
