@@ -2,7 +2,6 @@ package com.thedeveloperworldisyours.myvocabulary.words;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
     private List<Word> mWordList;
     private static WordItemListener sListener;
 
-    public static class DataObjectHolder extends RecyclerView.ViewHolder
+    public class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
 
@@ -46,14 +45,13 @@ public class WordsRecyclerViewAdapter extends RecyclerView
             super(itemView);
 
             ButterKnife.bind(this, itemView);
-            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
-            sListener.onWordClick(getAdapterPosition(), v);
+            Word word = mWordList.get(getAdapterPosition());
+            sListener.onWordClick(word);
         }
     }
 
@@ -116,7 +114,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
     }
 
     public interface WordItemListener {
-        void onWordClick(int position, View v);
+        void onWordClick(Word word);
 
         void onLearnedWordClick(Word learnedWord);
 

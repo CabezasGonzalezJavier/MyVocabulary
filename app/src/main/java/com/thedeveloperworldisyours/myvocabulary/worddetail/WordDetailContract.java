@@ -10,7 +10,7 @@ import com.thedeveloperworldisyours.myvocabulary.words.WordsContract;
 
 public class WordDetailContract {
 
-    interface View extends BaseView<WordsContract.Presenter> {
+    interface View extends BaseView<WordDetailContract.Presenter> {
 
         void setLoadingIndicator(boolean active);
 
@@ -24,7 +24,7 @@ public class WordDetailContract {
 
         void showDescription(String description);
 
-        void showLearnedStatus(boolean complete);
+        void showLearnedStatus(boolean learned);
 
         void showEditWord(String wordId);
 

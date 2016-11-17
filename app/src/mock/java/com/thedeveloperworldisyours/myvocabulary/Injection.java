@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 
 public class Injection {
-    public static WordsRepository provideTasksRepository(@NonNull Context context) {
+    public static WordsRepository provideWordsRepository(@NonNull Context context) {
         checkNotNull(context);
         return WordsRepository.getInstance(WordsRemoteDataSource.getInstance(),
                 WordsLocalDataSource.getInstance(context));

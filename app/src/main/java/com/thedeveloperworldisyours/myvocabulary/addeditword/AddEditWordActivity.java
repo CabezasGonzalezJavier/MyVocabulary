@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.FrameLayout;
 
 import com.thedeveloperworldisyours.myvocabulary.Injection;
 import com.thedeveloperworldisyours.myvocabulary.R;
@@ -47,20 +46,20 @@ public class AddEditWordActivity extends AppCompatActivity {
             mAddEditWordFragment = AddEditWordFragment.newInstance();
 
             if (getIntent().hasExtra(AddEditWordFragment.ARGUMENT_EDIT_WORD_ID)) {
-                actionBar.setTitle(R.string.edit_word);
+                actionBar.setTitle(R.string.add_edit_word_act_edit_word);
                 Bundle bundle = new Bundle();
                 bundle.putString(AddEditWordFragment.ARGUMENT_EDIT_WORD_ID, wordId);
                 mAddEditWordFragment.setArguments(bundle);
             } else {
                 if (actionBar != null) {
-                    actionBar.setTitle(R.string.add_word);
+                    actionBar.setTitle(R.string.add_edit_word_act_add_word);
                 }
             }
 
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mAddEditWordFragment, R.id.add_edit_word_act_contentFrame);
         }
 
-        new AddEditWordPresenter(wordId, Injection.provideTasksRepository(getApplicationContext()), mAddEditWordFragment);
+        new AddEditWordPresenter(wordId, Injection.provideWordsRepository(getApplicationContext()), mAddEditWordFragment);
     }
 
     @Override

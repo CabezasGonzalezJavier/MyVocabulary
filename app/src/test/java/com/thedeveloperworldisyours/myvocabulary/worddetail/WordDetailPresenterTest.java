@@ -8,11 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by javierg on 16/11/2016.
@@ -28,7 +32,7 @@ public class WordDetailPresenterTest {
 
     public static final Word ACTIVE_WORD = new Word(TITLE_TEST, DESCRIPTION_TEST);
 
-    public static final Word COMPLETED_WORD = new Word(TITLE_TEST, DESCRIPTION_TEST, true);
+    public static final Word LEARNED_WORD = new Word(TITLE_TEST, DESCRIPTION_TEST, true);
 
     WordDetailPresenter mPresenter;
 
@@ -44,8 +48,45 @@ public class WordDetailPresenterTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-//        mPresenter = new WordDetailPresenter(mRepository, mWordDetailView, mWordId);
-//        mPresenter.start();
+        when(mWordDetailView.isActive()).thenReturn(true);
+    }
+
+    @Test
+    public void getActiveWordFromRepositoryAndLoadIntoView(){
+
+        mPresenter = new WordDetailPresenter(mRepository, mWordDetailView, ACTIVE_WORD.getId());
+        mPresenter.start();
+
+        verify(mRepository).getWord( eq(ACTIVE_WORD.getId()), mGetWordCallbackCaptor.capture());
+
+        InOrder inOrder = inOrder(mWordDetailView);
+        inOrder.verify(mWordDetailView).setLoadingIndicator(true);
+
+        mGetWordCallbackCaptor.getValue().onWordLoaded(ACTIVE_WORD);
+
+        inOrder.verify(mWordDetailView).setLoadingIndicator(false);
+        verify(mWordDetailView).showTitle(TITLE_TEST);
+        verify(mWordDetailView).showDescription(DESCRIPTION_TEST);
+        verify(mWordDetailView).showLearnedStatus(false);
+    }
+
+    @Test
+    public void getLearnedWordFromRepositoryAndLoadIntoView() {
+        mPresenter = new WordDetailPresenter(mRepository, mWordDetailView, LEARNED_WORD.getId());
+        mPresenter.start();
+
+        verify(mRepository).getWord( eq(LEARNED_WORD.getId()), mGetWordCallbackCaptor.capture());
+
+        InOrder inOrder = inOrder(mWordDetailView);
+        inOrder.verify(mWordDetailView).setLoadingIndicator(true);
+
+        mGetWordCallbackCaptor.getValue().onWordLoaded(LEARNED_WORD);
+
+        inOrder.verify(mWordDetailView).setLoadingIndicator(false);
+
+        verify(mWordDetailView).showTitle(TITLE_TEST);
+        verify(mWordDetailView).showDescription(DESCRIPTION_TEST);
+        verify(mWordDetailView).showLearnedStatus(true);
     }
 
     @Test
@@ -102,7 +143,7 @@ public class WordDetailPresenterTest {
     }
 
     @Test
-    public void invalidWordIsNotShownWhenEditting() {
+    public void invalidWordIsNotShownWhenEditing() {
         mPresenter = new WordDetailPresenter(mRepository, mWordDetailView, INVALID_WORD_ID);
 
         mPresenter.editWord();

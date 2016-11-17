@@ -25,6 +25,7 @@ import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordActivity;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 import com.thedeveloperworldisyours.myvocabulary.util.DividerItemDecoration;
+import com.thedeveloperworldisyours.myvocabulary.worddetail.WordDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,6 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     private WordsContract.Presenter mPresenter;
     private WordsRecyclerViewAdapter mAdapter;
-    private List<Word> mWordList;
 
     private WordsInteractionListener mListener;
 
@@ -215,14 +215,14 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
 
     @Override
     public void showWordDetailsUi(String wordId) {
-//        Intent intent = new Intent(getActivity(), AddEditWordActivity.class);
-//        intent.putExtra(W)
-//        startActivityForResult(intent, );
+        Intent intent = new Intent(getActivity(), WordDetailActivity.class);
+        intent.putExtra(WordDetailActivity.EXTRA_WORD_ID, wordId);
+        startActivity(intent);
     }
 
     @Override
     public void showWordMarkedComplete() {
-        showMessage(getString(R.string.words_frag_marked_complete));
+        showMessage(getString(R.string.words_frag_marked_learned));
     }
 
     @Override
@@ -320,8 +320,8 @@ public class WordsFragment extends Fragment implements WordsContract.View, Words
     }
 
     @Override
-    public void onWordClick(int position, View v) {
-        mPresenter.openWordDetails(mWordList.get(position));
+    public void onWordClick(Word word) {
+        mPresenter.openWordDetails(word);
     }
 
     @Override

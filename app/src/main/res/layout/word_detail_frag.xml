@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrey"
+    tools:context="com.thedeveloperworldisyours.myvocabulary.worddetail.WordDetailFragment">
+
+    <CheckBox
+        android:id="@+id/word_detail_frag_learned_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/words_list_item_left"
+        android:paddingTop="@dimen/activity_horizontal_margin" />
+
+    <TextView
+        android:id="@+id/word_detail_frag_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toRightOf="@+id/word_detail_frag_learned_check_box"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <TextView
+        android:id="@+id/word_detail_frag_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word_detail_frag_title"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:text="Medions Text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+</RelativeLayout>

@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">My Vocabulary</string>
-    <string name="add_word">Add Word</string>
-    <string name="edit_word">Edit Word</string>
+    <string name="add_edit_word_act_add_word">Add Word</string>
+    <string name="add_edit_word_act_edit_word">Edit Word</string>
 
-    <string name="words_frag_no_data">No data</string>
     <string name="words_frag_label_all">All Words</string>
     <string name="words_frag_label_active">Active Words</string>
     <string name="words_frag_label_learned">Learned Words</string>
@@ -12,10 +11,12 @@
     <string name="words_frag_no_learned_word">No Learned Words</string>
     <string name="words_frag_learned_words_cleared">Learned words cleared</string>
     <string name="words_frag_loading_words_error">Error while loading words</string>
-    <string name="words_frag_marked_complete">Word marked complete</string>
+    <string name="words_frag_marked_learned">Word marked learned</string>
     <string name="words_frag_marked_active">Word marked active</string>
 
     <string name="refresh">Refresh</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="no_data">No data</string>
 
     <string name="menu_all">All</string>
     <string name="menu_active">Active</string>
@@ -32,4 +33,7 @@
     <string name="add_edit_word_frag_description_hint">Enter your description here.</string>
     <string name="add_edit_word_frag_title_empty">Title cannot be empty.</string>
 
+    <string name="word_detail_act_title">Word Detail</string>
+    <string name="word_detail_frag_marked_learned">Word marked learned</string>
+    <string name="word_detail_frag_marked_active">Word marked active</string>
 </resources>

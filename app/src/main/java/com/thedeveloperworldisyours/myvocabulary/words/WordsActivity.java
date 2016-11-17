@@ -21,10 +21,16 @@ import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
 import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.thedeveloperworldisyours.myvocabulary.R.style.styleActionBar;
 
 public class WordsActivity extends AppCompatActivity implements WordsInteractionListener{
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
+
+    @BindView(R.id.words_act_toolbar)
+    Toolbar mToolbar;
 
     private DrawerLayout mDrawerLayout;
 
@@ -36,10 +42,10 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
         super.onCreate(savedInstanceState);
         setContentView(R.layout.words_act);
 
+        ButterKnife.bind(this);
 
-        // Set up the toolbar.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.words_act_toolbar);
-        setSupportActionBar(toolbar);
+        // Set up the mToolbar.
+        setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -64,7 +70,7 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
 
         // Create the presenter
         mWordsPresenter = new WordsPresenter(
-                Injection.provideTasksRepository(getApplicationContext()), wordsFragment);
+                Injection.provideWordsRepository(getApplicationContext()), wordsFragment);
 
         // Load previously saved state, if available.
         if (savedInstanceState != null) {
@@ -85,7 +91,7 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // Open the navigation drawer_text_color_selector when the home icon is selected from the toolbar.
+                // Open the navigation drawer_text_color_selector when the home icon is selected from the mToolbar.
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }

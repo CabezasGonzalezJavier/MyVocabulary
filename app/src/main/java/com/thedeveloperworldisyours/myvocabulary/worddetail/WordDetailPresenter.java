@@ -28,6 +28,8 @@ public class WordDetailPresenter implements WordDetailContract.Presenter {
         this.mWordsRepository = checkNotNull(mWordsRepository, "WordsRepository cannot be null!!");
         this.mView = checkNotNull(mView, "WordDetailContract cannot be null!!");
         this.mWordId = mWordId;
+
+        mView.setPresenter(this);
     }
 
     @Override
