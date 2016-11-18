@@ -134,6 +134,7 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
     public void onFragmentInteraction(String string) {
         mActionBar.setTitle(spannableStringActionBar(string));
     }
+
     public SpannableString spannableStringActionBar(String string) {
         SpannableString spannableString = new SpannableString(string);
         spannableString.setSpan(new TextAppearanceSpan(this, styleActionBar), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

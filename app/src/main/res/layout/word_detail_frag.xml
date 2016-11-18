@@ -7,31 +7,35 @@
 
     <CheckBox
         android:id="@+id/word_detail_frag_learned_check_box"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/word_detail_frag_description"
+        android:layout_alignTop="@+id/word_detail_frag_title"
         android:background="@android:color/white"
-        android:paddingLeft="@dimen/words_list_item_left"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_horizontal_margin" />
 
     <TextView
         android:id="@+id/word_detail_frag_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_toRightOf="@+id/word_detail_frag_learned_check_box"
         android:background="@android:color/white"
-        android:gravity="center"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_horizontal_margin"
+        android:text="@string/add_edit_word_act_add_word"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <TextView
         android:id="@+id/word_detail_frag_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/word_detail_frag_title"
         android:layout_below="@+id/word_detail_frag_title"
         android:background="@android:color/white"
-        android:gravity="center"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_horizontal_margin"
         android:text="Medions Text"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

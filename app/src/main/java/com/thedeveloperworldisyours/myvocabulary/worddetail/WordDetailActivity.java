@@ -1,5 +1,7 @@
 package com.thedeveloperworldisyours.myvocabulary.worddetail;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,9 +10,12 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
+import android.view.View;
 
 import com.thedeveloperworldisyours.myvocabulary.Injection;
 import com.thedeveloperworldisyours.myvocabulary.R;
+import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordActivity;
+import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordFragment;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
 
@@ -40,7 +45,7 @@ public class WordDetailActivity extends AppCompatActivity {
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setTitle(spannableStringActionBar(getString(R.string.word_detail_act_title)));
 
-        String wordId = getIntent().getStringExtra(EXTRA_WORD_ID);
+        final String wordId = getIntent().getStringExtra(EXTRA_WORD_ID);
 
         WordDetailFragment wordDetailFragment = (WordDetailFragment) getSupportFragmentManager().findFragmentById(R.id.word_detail_act_content_frame);
 
@@ -50,6 +55,19 @@ public class WordDetailActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     wordDetailFragment, R.id.word_detail_act_content_frame);
         }
+
+        // Set up floating action button
+        FloatingActionButton fab =
+                (FloatingActionButton) findViewById(R.id.word_detail_act_fab_edit);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(WordDetailActivity.this, AddEditWordActivity.class);
+                intent.putExtra(AddEditWordFragment.ARGUMENT_EDIT_WORD_ID, wordId);
+                startActivity(intent);
+            }
+        });
 
         // Create the presenter
         new WordDetailPresenter(

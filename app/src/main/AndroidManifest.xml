@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".addeditword.AddEditWordActivity" />
-        <activity android:name=".worddetail.WordDetailActivity"></activity>
+        <activity android:name=".worddetail.WordDetailActivity" />
+        <activity android:name=".statistics.StatisticsActivity"></activity>
     </application>
 
 </manifest>
