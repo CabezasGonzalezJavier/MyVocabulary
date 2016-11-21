@@ -1,5 +1,6 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
+import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.NavigationView;
 import android.support.test.espresso.IdlingResource;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 
 import com.thedeveloperworldisyours.myvocabulary.Injection;
 import com.thedeveloperworldisyours.myvocabulary.R;
+import com.thedeveloperworldisyours.myvocabulary.statistics.StatisticsActivity;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
 import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
@@ -108,11 +110,11 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
                                 // Do nothing, we're already on that screen
                                 break;
                             case R.id.statistics_navigation_menu_item:
-//                                Intent intent =
-//                                        new Intent(WordsActivity.this, StatisticsActivity.class);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                startActivity(intent);
+                                Intent intent =
+                                        new Intent(WordsActivity.this, StatisticsActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
                                 break;
                             default:
                                 break;

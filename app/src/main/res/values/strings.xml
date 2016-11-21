@@ -36,4 +36,8 @@
     <string name="word_detail_act_title">Word Detail</string>
     <string name="word_detail_frag_marked_learned">Word marked learned</string>
     <string name="word_detail_frag_marked_active">Word marked active</string>
+
+    <string name="statistics_frag_active_word">Active words:</string>
+    <string name="statistics_frag_learned">Learned words:</string>
+
 </resources>
