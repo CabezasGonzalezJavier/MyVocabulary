@@ -28,7 +28,7 @@ public class AddEditWordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_word_act);
-
+        overridePendingTransition(R.anim.go_in, R.anim.go_out);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
@@ -71,5 +71,15 @@ public class AddEditWordActivity extends AppCompatActivity {
     @VisibleForTesting
     public IdlingResource getCountingIdlingResource() {
         return EspressoIdlingResource.getIdlingResource();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishMyActivity();
+    }
+
+    public void finishMyActivity() {
+        finish();
+        overridePendingTransition(R.anim.back_in, R.anim.back_out);
     }
 }
