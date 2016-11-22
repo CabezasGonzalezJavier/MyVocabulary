@@ -19,6 +19,8 @@ public class StatisticsPresenter implements StatisticsContract.Presenter {
     public StatisticsPresenter(WordsRepository mWordsRepository, StatisticsContract.View mView) {
         this.mWordsRepository = mWordsRepository;
         this.mView = mView;
+
+        mView.setPresenter(this);
     }
 
     @Override

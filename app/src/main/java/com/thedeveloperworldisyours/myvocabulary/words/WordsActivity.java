@@ -112,9 +112,8 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
                             case R.id.statistics_navigation_menu_item:
                                 Intent intent =
                                         new Intent(WordsActivity.this, StatisticsActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
+                                overridePendingTransition(0, 0);
                                 break;
                             default:
                                 break;

@@ -2,6 +2,7 @@ package com.thedeveloperworldisyours.myvocabulary.statistics;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,7 @@ import static com.thedeveloperworldisyours.myvocabulary.R.style.styleActionBar;
 public class StatisticsActivity extends AppCompatActivity {
 
     @BindView(R.id.statistics_act_drawer_layout)
-    DrawerLayout mDrawerLayou;
+    DrawerLayout mDrawerLayout;
 
     @BindView(R.id.statistics_act_toolbar)
     Toolbar mToolbar;
@@ -37,7 +38,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private StatisticsPresenter mPresenter;
 
-    private DrawerLayout mDrawerLayout;
     private ActionBar mActionBar;
 
     @Override
@@ -55,14 +55,14 @@ public class StatisticsActivity extends AppCompatActivity {
         mActionBar.setTitle(spannableStringActionBar(getString(R.string.app_name)));
 
         // Set up the navigation drawer_text_color_selector.
-        mDrawerLayou.setStatusBarBackground(R.color.colorPrimaryDark);
+        mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         if (mNavigationView != null) {
             setupDrawerContent(mNavigationView);
         }
 
         StatisticsFragment statisticsFragment = (StatisticsFragment) getSupportFragmentManager().findFragmentById(R.id.statistics_act_contentFrame);
         if (statisticsFragment == null) {
-        statisticsFragment.newInstance();
+            statisticsFragment = statisticsFragment.newInstance();
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), statisticsFragment, R.id.statistics_act_contentFrame);
         }
@@ -70,6 +70,17 @@ public class StatisticsActivity extends AppCompatActivity {
         //Create Presenter
         mPresenter = new StatisticsPresenter(Injection.provideWordsRepository(getApplicationContext()), statisticsFragment);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Open the navigation drawer_text_color_selector when the home icon is selected from the mToolbar.
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -81,9 +92,8 @@ public class StatisticsActivity extends AppCompatActivity {
                             case R.id.list_navigation_menu_item:
                                 Intent intent =
                                         new Intent(StatisticsActivity.this, WordsActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
+                                overridePendingTransition(0, 0);
                                 break;
                             case R.id.statistics_navigation_menu_item:
                                 // Do nothing, we're already on that screen

@@ -31,10 +31,9 @@ public class StatisticsFragment extends Fragment implements StatisticsContract.V
     }
 
     public static StatisticsFragment newInstance() {
-        StatisticsFragment fragment = new StatisticsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        StatisticsFragment statisticsFragment = new StatisticsFragment();
+
+        return statisticsFragment;
     }
 
     @Override
@@ -50,6 +49,12 @@ public class StatisticsFragment extends Fragment implements StatisticsContract.V
         View view = inflater.inflate(R.layout.statistics_frag, container, false);
         ButterKnife.bind(StatisticsFragment.this, view);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override

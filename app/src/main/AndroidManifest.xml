@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".addeditword.AddEditWordActivity" />
         <activity android:name=".worddetail.WordDetailActivity" />
-        <activity android:name=".statistics.StatisticsActivity"></activity>
+        <activity android:name=".statistics.StatisticsActivity"/>
     </application>
 
 </manifest>
