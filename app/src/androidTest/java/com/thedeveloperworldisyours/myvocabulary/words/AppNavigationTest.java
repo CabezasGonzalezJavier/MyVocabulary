@@ -28,16 +28,16 @@ public class AppNavigationTest {
     @Rule
     public ActivityTestRule<WordsActivity> mActivityTestRule = new ActivityTestRule<WordsActivity>(WordsActivity.class);
 
-    @Test
-    public void clickOnStatisticsNavigationItem_ShowsStatisticsScreen() {
-        onView(withId(R.id.words_act_drawer_layout))
-        .check(matches(isClosed(Gravity.LEFT)))
-        .perform(open());
-
-        onView(withId(R.id.words_act_nav_view))
-                .perform(navigateTo(R.id.statistics_navigation_menu_item));
-
-        onView(withId(R.id.activity_statistics)).check(matches(isDisplayed()));
-    }
+//    @Test
+//    public void clickOnStatisticsNavigationItem_ShowsStatisticsScreen() {
+//        onView(withId(R.id.words_act_drawer_layout))
+//        .check(matches(isClosed(Gravity.LEFT)))
+//        .perform(open());
+//
+//        onView(withId(R.id.words_act_nav_view))
+//                .perform(navigateTo(R.id.statistics_navigation_menu_item));
+//
+//        onView(withId(R.id.activity_statistics)).check(matches(isDisplayed()));
+//    }
 
 }

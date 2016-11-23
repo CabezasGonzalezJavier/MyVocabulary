@@ -72,7 +72,7 @@ public class StatisticsFragment extends Fragment implements StatisticsContract.V
             mStatistics.setText(getResources().getString(R.string.no_data));
         } else {
             String displayString = getResources().getString(R.string.statistics_frag_active_word) + " "
-                    + numberOfLearnWords + "\n" + getResources().getString(
+                    + numberOfActiveWords + "\n" + getResources().getString(
                     R.string.statistics_frag_learned) + " " + numberOfLearnWords;
             mStatistics.setText(displayString);
         }

@@ -35,7 +35,7 @@ public class WordsRecyclerViewAdapter extends RecyclerView
             .OnClickListener {
 
         @Nullable
-        @BindView(R.id.words_list_item_complete)
+        @BindView(R.id.words_list_item_learned)
         CheckBox mCheckBox;
         @Nullable
         @BindView(R.id.words_list_item_title)

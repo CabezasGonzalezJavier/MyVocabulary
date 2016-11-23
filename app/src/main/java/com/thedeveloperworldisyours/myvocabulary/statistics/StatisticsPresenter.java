@@ -54,7 +54,7 @@ public class StatisticsPresenter implements StatisticsContract.Presenter {
                 }
                 mView.setProgressIndicator(false);
 
-                mView.showStatistics(learnedWord, activeWord);
+                mView.showStatistics(activeWord, learnedWord);
             }
 
             @Override

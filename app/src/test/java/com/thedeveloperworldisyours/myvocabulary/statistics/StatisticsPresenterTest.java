@@ -76,7 +76,7 @@ public class StatisticsPresenterTest {
         mCapture.getValue().onWordsLoaded(WORDS);
 
         verify(mView).setProgressIndicator(false);
-        verify(mView).showStatistics(2, 1);
+        verify(mView).showStatistics(1, 2);
 
     }
 
