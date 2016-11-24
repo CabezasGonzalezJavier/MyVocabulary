@@ -1,6 +1,5 @@
 package com.thedeveloperworldisyours.myvocabulary.words;
 
-import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -229,18 +228,21 @@ public class WordTest {
     }
 
     @Test
-    public void createTwoWord_deleteWord() {
+    public void createTwoWord_deleteOnlyOneWord(){
         createWord(TITLE1, DESCRIPTION);
         createWord(TITLE2, DESCRIPTION);
 
         onView(withText(TITLE1)).check(matches(isDisplayed()));
         onView(withText(TITLE2)).check(matches(isDisplayed()));
-
+        clickCheckBoxForWord(TITLE1);
+        viewLearnedWord();
+        onView(withText(TITLE1)).check(matches(isDisplayed()));
         openActionBarOverflowOrOptionsMenu(getTargetContext());
         onView(withText(R.string.menu_clear)).perform(click());
 
         onView(withText(TITLE1)).check(matches(not(isDisplayed())));
-        onView(withText(TITLE2)).check(matches(not(isDisplayed())));
+        viewAllWord();
+        onView(withText(TITLE2)).check(matches((isDisplayed())));
 
     }
 
