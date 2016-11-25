@@ -1,10 +1,10 @@
 # MyVocabulary
-My Vocabulary is android app about storage your vocabulary for learning new language or learning more vocabulary in your mother language.
+
 <p align="center">
     <img src="https://github.com/CabezasGonzalezJavier/MyVocabulary/blob/master/MyVocabulary.jpg" alt="Web Launcher"/>
 </p>
 # About
-  My Vocabulary is android app about learning new language.
+ My Vocabulary is android app about storage your vocabulary for learning new language or learning more vocabulary in your mother language.
   Libraries
 ---------
 The project is setup using:
