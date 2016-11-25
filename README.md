@@ -7,7 +7,7 @@ My Vocabulary is android app about storage your vocabulary for learning new lang
   My Vocabulary is android app about learning new language.
   Libraries
 ---------
-
+The project is setup using:
  * **[Butter Knife](https://github.com/JakeWharton/butterknife)**
  * **[Espresso](https://google.github.io/android-testing-support-library/docs/espresso/index.html)**
  * **[Mockito](http://mockito.org/)**
