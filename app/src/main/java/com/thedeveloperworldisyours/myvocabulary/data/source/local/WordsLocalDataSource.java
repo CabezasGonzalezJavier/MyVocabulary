@@ -12,12 +12,14 @@ import com.thedeveloperworldisyours.myvocabulary.data.source.WordsDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by javierg on 24/10/2016.
  */
-
+@Singleton
 public class WordsLocalDataSource implements WordsDataSource {
 
     private static WordsLocalDataSource sInstance;
@@ -25,7 +27,7 @@ public class WordsLocalDataSource implements WordsDataSource {
     private WordsDbHelper mDbHelper;
 
     // Prevent direct instantiation.
-    private WordsLocalDataSource(@NonNull Context context) {
+    public WordsLocalDataSource(@NonNull Context context) {
         checkNotNull(context);
         mDbHelper = new WordsDbHelper(context);
     }

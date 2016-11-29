@@ -42,4 +42,5 @@ ext {
     rulesVersion = '0.5'
     espressoVersion = '2.2.2'
     butterKnife = '8.4.0'
+    daggerVersion = '2.4'
 }

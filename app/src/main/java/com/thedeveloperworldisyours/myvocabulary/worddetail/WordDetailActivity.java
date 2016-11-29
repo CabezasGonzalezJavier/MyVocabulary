@@ -12,12 +12,14 @@ import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 
-import com.thedeveloperworldisyours.myvocabulary.Injection;
+import com.thedeveloperworldisyours.myvocabulary.MyVocabularyApplication;
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordActivity;
 import com.thedeveloperworldisyours.myvocabulary.addeditword.AddEditWordFragment;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +34,9 @@ public class WordDetailActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private ActionBar mActionBar;
+
+    @Inject
+    WordDetailPresenter mWordDetailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +75,12 @@ public class WordDetailActivity extends AppCompatActivity {
         });
 
         // Create the presenter
-        new WordDetailPresenter(
-                Injection.provideWordsRepository(getApplicationContext()),
-                wordDetailFragment, wordId);
+        DaggerWordDetailComponent.builder()
+                .wordDetailPresenterModule(new WordDetailPresenterModule(wordDetailFragment, wordId))
+                .wordsRepositoryComponent(((MyVocabularyApplication) getApplication())
+                .getWordsRepositoryComponent()).build()
+                .inject(this);
+
     }
 
     @Override

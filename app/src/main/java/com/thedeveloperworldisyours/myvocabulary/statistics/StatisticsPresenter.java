@@ -7,6 +7,8 @@ import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by javierg on 18/11/2016.
  */
@@ -16,10 +18,18 @@ public class StatisticsPresenter implements StatisticsContract.Presenter {
     private WordsRepository mWordsRepository;
     private StatisticsContract.View mView;
 
-    public StatisticsPresenter(WordsRepository mWordsRepository, StatisticsContract.View mView) {
+    @Inject
+    StatisticsPresenter(WordsRepository mWordsRepository, StatisticsContract.View mView) {
+
         this.mWordsRepository = mWordsRepository;
         this.mView = mView;
+    }
 
+    /**
+     * Method injection is used here to safely reference {@code this} after the object is created.
+     */
+    @Inject
+    void setupListeners() {
         mView.setPresenter(this);
     }
 

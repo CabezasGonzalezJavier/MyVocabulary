@@ -16,12 +16,14 @@ import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
 import android.view.MenuItem;
 
-import com.thedeveloperworldisyours.myvocabulary.Injection;
+import com.thedeveloperworldisyours.myvocabulary.MyVocabularyApplication;
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.statistics.StatisticsActivity;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
 import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +38,10 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
 
     private DrawerLayout mDrawerLayout;
 
-    private WordsPresenter mWordsPresenter;
     private ActionBar mActionBar;
+
+    @Inject
+    WordsPresenter mWordsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +75,10 @@ public class WordsActivity extends AppCompatActivity implements WordsInteraction
         }
 
         // Create the presenter
-        mWordsPresenter = new WordsPresenter(
-                Injection.provideWordsRepository(getApplicationContext()), wordsFragment);
+        DaggerWordsComponent.builder()
+                .wordsRepositoryComponent(((MyVocabularyApplication) getApplication()).getWordsRepositoryComponent())
+                .wordsPresenterModule(new WordsPresenterModule(wordsFragment)).build()
+                .inject(this);
 
         // Load previously saved state, if available.
         if (savedInstanceState != null) {

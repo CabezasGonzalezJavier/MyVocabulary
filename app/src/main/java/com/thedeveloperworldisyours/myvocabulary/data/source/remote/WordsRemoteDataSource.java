@@ -11,10 +11,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 /**
  * Created by javierg on 24/10/2016.
  */
-
+@Singleton
 public class WordsRemoteDataSource implements WordsDataSource {
 
     private static WordsRemoteDataSource INSTANCE;

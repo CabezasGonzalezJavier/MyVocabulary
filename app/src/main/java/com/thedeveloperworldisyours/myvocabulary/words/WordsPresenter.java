@@ -11,6 +11,8 @@ import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -27,10 +29,15 @@ public class WordsPresenter implements WordsContract.Presenter {
 
     private boolean mFirstLoad = true;
 
+    @Inject
     public WordsPresenter(@NonNull WordsRepository wordsRepository, @NonNull WordsContract.View wordsView) {
         mWordsRepository = checkNotNull(wordsRepository, "WordsRepository cannot be null");
         mWordsView = checkNotNull(wordsView, "WordsView cannot be null!");
 
+    }
+
+    @Inject
+    void setupListeners() {
         mWordsView.setPresenter(this);
     }
 

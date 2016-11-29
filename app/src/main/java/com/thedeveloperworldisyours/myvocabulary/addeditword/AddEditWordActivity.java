@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.thedeveloperworldisyours.myvocabulary.Injection;
+import com.thedeveloperworldisyours.myvocabulary.MyVocabularyApplication;
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.EspressoIdlingResource;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,8 @@ public class AddEditWordActivity extends AppCompatActivity {
 //    @BindView(R.id.add_edit_word_act_contentFrame)
 //    FrameLayout mFrame;
 
+    @Inject
+    AddEditWordPresenter mAddEditWordPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +45,30 @@ public class AddEditWordActivity extends AppCompatActivity {
 
         String wordId = getIntent().getStringExtra(AddEditWordFragment.ARGUMENT_EDIT_WORD_ID);
 //        AddEditWordFragment mAddEditWordFragment = mFrame;
-        AddEditWordFragment mAddEditWordFragment = (AddEditWordFragment) getSupportFragmentManager().findFragmentById(R.id.add_edit_word_act_contentFrame);
-        if (mAddEditWordFragment == null) {
-            mAddEditWordFragment = AddEditWordFragment.newInstance();
+        AddEditWordFragment addEditWordFragment = (AddEditWordFragment) getSupportFragmentManager().findFragmentById(R.id.add_edit_word_act_contentFrame);
+        if (addEditWordFragment == null) {
+            addEditWordFragment = AddEditWordFragment.newInstance();
 
             if (getIntent().hasExtra(AddEditWordFragment.ARGUMENT_EDIT_WORD_ID)) {
                 actionBar.setTitle(R.string.add_edit_word_act_edit_word);
                 Bundle bundle = new Bundle();
                 bundle.putString(AddEditWordFragment.ARGUMENT_EDIT_WORD_ID, wordId);
-                mAddEditWordFragment.setArguments(bundle);
+                addEditWordFragment.setArguments(bundle);
             } else {
                 if (actionBar != null) {
                     actionBar.setTitle(R.string.add_edit_word_act_add_word);
                 }
             }
 
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mAddEditWordFragment, R.id.add_edit_word_act_contentFrame);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditWordFragment, R.id.add_edit_word_act_contentFrame);
         }
 
-        new AddEditWordPresenter(wordId, Injection.provideWordsRepository(getApplicationContext()), mAddEditWordFragment);
+        DaggerAddEditWordComponent.builder()
+                .addEditWordPresenterModule(
+                        new AddEditWordPresenterModule(addEditWordFragment, wordId))
+                .wordsRepositoryComponent(
+                        ((MyVocabularyApplication) getApplication()).getWordsRepositoryComponent()).build()
+                .inject(this);
     }
 
     @Override

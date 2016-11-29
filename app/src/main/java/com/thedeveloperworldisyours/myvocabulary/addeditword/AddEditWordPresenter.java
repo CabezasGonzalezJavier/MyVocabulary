@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import com.thedeveloperworldisyours.myvocabulary.data.Word;
 import com.thedeveloperworldisyours.myvocabulary.data.source.WordsDataSource;
 
+import javax.inject.Inject;
+
 /**
  * Created by javierg on 08/11/2016.
  */
 
-public class AddEditWordPresenter implements AddEditWordContract.Presenter, WordsDataSource.GetWordCallback {
+final class AddEditWordPresenter implements AddEditWordContract.Presenter, WordsDataSource.GetWordCallback {
 
     @NonNull
     private final WordsDataSource mWordsDataSource;
@@ -20,12 +22,17 @@ public class AddEditWordPresenter implements AddEditWordContract.Presenter, Word
     @NonNull
     private String mWordId;
 
-    public AddEditWordPresenter(@NonNull String wordId, @NonNull WordsDataSource wordsDataSource, @NonNull AddEditWordContract.View addEditWordView) {
+    @Inject
+    AddEditWordPresenter(@NonNull String wordId, WordsDataSource wordsDataSource,
+                         AddEditWordContract.View addEditWordView) {
         this.mWordId = wordId;
         this.mWordsDataSource = wordsDataSource;
         this.mAddEditWordView = addEditWordView;
+    }
 
-        addEditWordView.setPresenter(this);
+    @Inject
+    void setupListeners() {
+        mAddEditWordView.setPresenter(this);
     }
 
     @Override

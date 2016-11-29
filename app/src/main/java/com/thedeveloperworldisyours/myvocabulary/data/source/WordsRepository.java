@@ -14,6 +14,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -23,6 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * obtained from the server, by using the remote data source only if the local database doesn't
  * exist or is empty.
  */
+@Singleton
 public class WordsRepository implements WordsDataSource {
 
     private static WordsRepository INSTANCE = null;
@@ -43,32 +47,10 @@ public class WordsRepository implements WordsDataSource {
     boolean mCacheIsDirty = false;
 
     // Prevent direct instantiation.
-    public WordsRepository(@NonNull WordsDataSource mWordsRemoteDataSource, @NonNull WordsDataSource mWordsLocalDataSource) {
+    @Inject
+    WordsRepository(@Remote WordsDataSource mWordsRemoteDataSource, @Local WordsDataSource mWordsLocalDataSource) {
         this.mWordsRemoteDataSource = checkNotNull(mWordsRemoteDataSource);
         this.mWordsLocalDataSource = checkNotNull(mWordsLocalDataSource);
-    }
-
-    /**
-     * Returns the single instance of this class, creating it if necessary.
-     *
-     * @param wordsRemoteDataSource the backend data source
-     * @param wordsLocalDataSource  the device storage data source
-     * @return the {@link WordsRepository} instance
-     */
-    public static WordsRepository getInstance(WordsDataSource wordsRemoteDataSource,
-                                              WordsDataSource wordsLocalDataSource) {
-        if (INSTANCE == null) {
-            INSTANCE = new WordsRepository(wordsRemoteDataSource, wordsLocalDataSource);
-        }
-        return INSTANCE;
-    }
-
-    /**
-     * Used to force {@link #getInstance(WordsDataSource, WordsDataSource)} to create a new instance
-     * next time it's called.
-     */
-    public static void destroyInstance() {
-        INSTANCE = null;
     }
 
     /**

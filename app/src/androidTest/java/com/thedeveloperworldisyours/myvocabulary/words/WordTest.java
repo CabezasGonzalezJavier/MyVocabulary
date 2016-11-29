@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
-import com.thedeveloperworldisyours.myvocabulary.Injection;
 import com.thedeveloperworldisyours.myvocabulary.R;
 
 import org.hamcrest.Description;

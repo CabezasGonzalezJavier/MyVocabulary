@@ -43,10 +43,6 @@ public class WordDetailFragment extends Fragment implements WordDetailContract.V
     @NonNull
     private static final int REQUEST_EDIT_WORD = 1;
 
-    public WordDetailFragment() {
-        // Required empty public constructor
-    }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

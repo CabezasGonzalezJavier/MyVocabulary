@@ -21,7 +21,7 @@ public class FakeWordsRemoteDataSource implements WordsDataSource {
     private static final Map<String, Word> WORDS_SERVICE_DATA = new LinkedHashMap<>();
 
     // Prevent direct instantiation.
-    private FakeWordsRemoteDataSource() {}
+    public FakeWordsRemoteDataSource() {}
 
     public static FakeWordsRemoteDataSource getInstance() {
         if (INSTANCE == null) {

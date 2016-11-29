@@ -9,6 +9,8 @@ import com.thedeveloperworldisyours.myvocabulary.data.source.WordsRepository;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -24,11 +26,16 @@ public class WordDetailPresenter implements WordDetailContract.Presenter {
     @Nullable
     private String mWordId;
 
-    public WordDetailPresenter(@NotNull WordsRepository mWordsRepository, @NotNull WordDetailContract.View mView, @Nullable String mWordId) {
-        this.mWordsRepository = checkNotNull(mWordsRepository, "WordsRepository cannot be null!!");
-        this.mView = checkNotNull(mView, "WordDetailContract cannot be null!!");
+    @Inject
+    WordDetailPresenter( WordsRepository wordsRepository, WordDetailContract.View view, @Nullable String mWordId) {
+        this.mWordsRepository = wordsRepository; //checkNotNull(mWordsRepository, "WordsRepository cannot be null!!");
+        this.mView = view;//checkNotNull(mView, "WordDetailContract cannot be null!!");
         this.mWordId = mWordId;
 
+    }
+
+    @Inject
+    void setupListeners() {
         mView.setPresenter(this);
     }
 

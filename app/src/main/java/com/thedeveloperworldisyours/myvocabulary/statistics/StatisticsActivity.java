@@ -14,11 +14,13 @@ import android.text.Spanned;
 import android.text.style.TextAppearanceSpan;
 import android.view.MenuItem;
 
-import com.thedeveloperworldisyours.myvocabulary.Injection;
+import com.thedeveloperworldisyours.myvocabulary.MyVocabularyApplication;
 import com.thedeveloperworldisyours.myvocabulary.R;
 import com.thedeveloperworldisyours.myvocabulary.util.ActivityUtils;
 import com.thedeveloperworldisyours.myvocabulary.util.TypefaceSpan;
 import com.thedeveloperworldisyours.myvocabulary.words.WordsActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +38,8 @@ public class StatisticsActivity extends AppCompatActivity {
     @BindView(R.id.statistics_act_nav_view)
     NavigationView mNavigationView;
 
-    private StatisticsPresenter mPresenter;
+    @Inject
+    StatisticsPresenter mPresenter;
 
     private ActionBar mActionBar;
 
@@ -68,8 +71,11 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         //Create Presenter
-        mPresenter = new StatisticsPresenter(Injection.provideWordsRepository(getApplicationContext()), statisticsFragment);
-
+        DaggerStatisticsComponent.builder()
+                .statisticsPresenterModule(new StatisticsPresenterModule(statisticsFragment))
+                .wordsRepositoryComponent(((MyVocabularyApplication)getApplication())
+                .getWordsRepositoryComponent())
+                .build().inject(this);
     }
 
     @Override
