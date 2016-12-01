@@ -20,7 +20,6 @@ The project is setup using:
 
     - Gradle
 
-
 # Installation
 
     - Install Android Studio:
