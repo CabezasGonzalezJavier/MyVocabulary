@@ -1,5 +1,11 @@
 # MyVocabulary
-App for learning vocabulary
+My Vocabulary is android app about storage your vocabulary for learning new language or learning more vocabulary in your mother language.
+
+
+<p align="center">
+    <img src="https://github.com/CabezasGonzalezJavier/MyVocabulary/blob/master/MyVocabulary.jpg" alt="Web Launcher"/>
+</p>
+
 
 There is simple implementation of the Model-View-Presenter pattern with no architectural frameworks.
 
@@ -19,11 +25,7 @@ The view contains almost no logic: it converts the presenter's commands to UI ac
 
 Contracts are interfaces used to define the connection between views and presenters.
 
-<p align="center">
-    <img src="https://github.com/CabezasGonzalezJavier/MyVocabulary/blob/master/MyVocabulary.jpg" alt="Web Launcher"/>
-</p>
-# About
- My Vocabulary is android app about storage your vocabulary for learning new language or learning more vocabulary in your mother language.
+ 
   Libraries
 ---------
 The project is setup using:
