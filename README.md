@@ -1,4 +1,23 @@
 # MyVocabulary
+App for learning vocabulary
+
+There is simple implementation of the Model-View-Presenter pattern with no architectural frameworks.
+
+* **[Android architecture](https://github.com/googlesamples/android-architecture)**
+
+
+Each feature has:
+
+* A contract defining the view and the presenter.
+* An Activity which is responsible for the creation of fragments and presenters
+* A Fragment which implements the view interface.
+* A presenter which implements the presenter interface.
+
+In general, the business logic lives in the presenter and relies on the view to do the Android UI work.
+
+The view contains almost no logic: it converts the presenter's commands to UI actions and listens to user actions, which are passed to the presenter.
+
+Contracts are interfaces used to define the connection between views and presenters.
 
 <p align="center">
     <img src="https://github.com/CabezasGonzalezJavier/MyVocabulary/blob/master/MyVocabulary.jpg" alt="Web Launcher"/>
